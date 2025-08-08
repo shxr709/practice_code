@@ -2,7 +2,7 @@
 
 int is_leap_year(int year);
 
-int main(int argc, char const *argv[])
+int main()
 {
     /*
     int user_input_year, user_input_month, user_input_day;
@@ -25,17 +25,52 @@ int main(int argc, char const *argv[])
 
     int year, month, day;
     int days_in_month[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-    int total_days = 0;
+    year = month = day = 0;
+    //int total_days = 0;
 
+    /*新增判断日期是否合法*/
     printf("输入某年某月某日(用空格隔开)：");
-    scanf("%d %d %d", &year, &month, &day);
-
+    //scanf("%d %d %d", &year, &month, &day);
+    if (scanf("%d %d %d", &year, &month, &day) != 3)
+    {
+        printf("输入无效，请输入正确的年份、月份和日期。\n");
+        return 1;
+    }
+    
+    /*
     if (is_leap_year(year))//如果接受到is_leap_year返回的值是1则执行days_in_month[1] = 29;，否则将往下继续执行
     {
         days_in_month[1] = 29; //leap year 闰年
     }
-    
+    */
+
+    //判断年份是否合法
+    if (year <= 0)
+    {
+        printf("年份输入不合法，请输入一个正整数!\n");
+        return 1;
+    }
+
+    //判断月份是否合法
+    if (month < 1 || month > 12)
+    {
+        printf("月份输入不合法，请输入1到12之间的数字!\n");
+        return 1;
+    }
+
+    //判断日期是否合法
+    if (is_leap_year(year))
+    {
+        days_in_month[1] = 29; 
+    }
+    if (day < 1 || day > days_in_month[month - 1])
+    {
+        printf("日期输入不合法，请输入有效的日期!\n");
+        return 1;
+    }
+   
     //计算从1月1日到输入日期的天数
+    int total_days = 0;
     for (int i = 0; i < month - 1; i++)
     {
         total_days += days_in_month[i];
