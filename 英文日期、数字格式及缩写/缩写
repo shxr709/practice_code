@@ -1,0 +1,58 @@
+序数词、日期缩写：
+1st     first
+2nd     second
+3rd     third
+4th     fourth
+5th     fifth
+6th     sixth
+7th     seventh
+8th     eighth
+9th     ninth
+10th    tenth
+11th    eleventh
+12th    twelfth
+13th    thirteenth
+14th    fourteenth
+15th    fifteenth
+16th    sixteenth
+17th    seventeenth
+18th    eighteenth
+19th    nineteenth
+20th    twentieth
+21st    twenty-first
+22nd    twenty-second
+23rd    twenty-third
+24th    twenty-fourth
+25th    twenty-fifth
+26th    twenty-sixth
+27th    twenty-seventh
+28th    twenty-eighth
+29th    twenty-ninth
+30th    thirtieth
+31st    thirty-first
+#以1、2、3结尾的数字其缩写为特殊格式，31st、32nd、33rd，其他数字直接加th 
+
+
+月份缩写：
+January     一月    Jan
+February    二月    Feb
+March       三月    Mar
+April       四月    Apr
+May         五月    May
+June        六月    Jun
+July        七月    Jul
+August      八月    Aug
+September   九月    Sept
+October     十月    Oct
+November    十一月  Nov
+December    十二月  Dec
+
+
+星期的缩写：
+Monday      星期一  Mon
+Tuesday     星期二  Tue
+Wednesday   星期三  Wed
+Thursday    星期四  Thurs/Thur
+Friday      星期五  Fri
+Saturday    星期六  Sat
+Sunday      星期日  Sun
