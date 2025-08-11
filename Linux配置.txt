@@ -11,4 +11,5 @@
     git config --global https.proxy http://127.0.0.1:7890
 
 4、ubuntu备份密码
-    jasoNthen2314    
+    jasoNthen2314   
+     
