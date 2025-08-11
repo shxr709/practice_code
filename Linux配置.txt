@@ -1,6 +1,6 @@
 1、sudo apt update && sudo apt upgrade，重启系统
 
-2、sudo apt install vim git gcc g++ gdb cmake btop 7zip
+2、sudo apt install vim git gcc g++ gdb cmake btop 7zip timeshift
 
 3、配置Git 
     1）设置用户名和邮件地址
@@ -8,4 +8,7 @@
     git config --global user.email johndoe@example.com
     2）设置代理
     git config --global http.proxy http://127.0.0.1:7890
-    git config --global https.proxy http://127.0.0.1:7890俄
+    git config --global https.proxy http://127.0.0.1:7890
+
+4、ubuntu备份密码
+    jasoNthen2314    
