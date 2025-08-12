@@ -1,0 +1,9 @@
+1、用管理员权限打开      cmd
+2、输入                 diskpart 
+3、输入		            list disk		查询磁盘信息
+4、选择磁盘4		    select disk 4
+5、查看分区列表以确定具体分区		list partition
+6、选择分区1		    select partition 1
+7、为win10的EFI分区分配盘符		assign letter=x		(大小写无关，自动转成大写，不要和已有的盘符重复)
+8、查看win11我的电脑会发现有个x盘，就是我们刚刚分配的EFI分区，用管理员打开记事本，然后通过记事本菜单栏里的 打开 来访问x盘，会发现P盘里有个EFI文件夹，打开EFI文件夹，删除ubuntu或fedora
+9、回到diskpart删除EFI分区盘符x		remove letter=x
