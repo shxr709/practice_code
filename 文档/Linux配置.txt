@@ -1,6 +1,6 @@
 1、sudo apt update && sudo apt upgrade，重启系统
 
-2、sudo apt install vim git gcc g++ gdb cmake btop 7zip timeshift
+2、sudo apt install vim git gcc g++ gdb cmake build-essential btop 7zip timeshift
 
 3、配置Git 
     1）设置用户名和邮件地址
