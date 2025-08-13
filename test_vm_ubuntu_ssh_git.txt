@@ -1,1 +1,0 @@
-test vm_ubuntu ssh git push and pull
