@@ -1,0 +1,35 @@
+1. 检查虚拟化支持
+    lscpu | grep Virtualization
+2. 系统更新
+    sudo apt update && sudo apt upgrade -y
+3. 安装必要组件
+    sudo apt install -y virt-manager qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virtinst
+4. 验证安装  
+    virt-manager --version
+    qemu-system-x86_64 --version
+    virsh --version
+5. 服务管理
+    # 启用并启动服务
+    sudo systemctl enable --now libvirtd
+    # 检查服务状态
+    sudo systemctl status libvirtd
+6. 用户权限配置
+    # 添加用户组
+    sudo adduser $USER libvirt
+    sudo adduser $USER kvm
+    # 立即生效
+    newgrp libvirt
+    newgrp kvm
+    # 验证组
+    groups
+7. 网络配置（可选）
+    # 启动默认网络
+    sudo virsh net-start default
+    # 设置开机自启
+    sudo virsh net-autostart default
+    # 检查网络状态
+    sudo virsh net-list --all
+8. 安装额外工具
+    sudo apt install -y ovmf virt-viewer
+9.启动
+    virt-manager
