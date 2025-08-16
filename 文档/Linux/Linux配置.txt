@@ -1,15 +1,30 @@
+一、ubuntu
 1、sudo apt update && sudo apt upgrade，重启系统
-
 2、sudo apt install vim git gcc g++ gdb cmake build-essential btop 7zip timeshift
-
-3、配置Git 
+3、ubuntu备份密码
+    jasoNthen2314   
+     
+二、centos7
+1、centos7换源
+    1) sudo cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
+    2) wget -O /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-7.repo
+    3) yum makecache
+    4) sudo yum update
+2、centos7更换主机名
+    1)查看当前主机名
+        hostnamectl
+    2)修改主机名
+        永久修改
+            1.hostnamectl set-hostname 新主机名
+            2.编辑/etc/hostname文件来修改主机名
+                vim /etc/hostname -> 将文件内容修改为新的主机名 -> 重启
+        临时修改
+            hostname 新主机名
+            
+三、Git配置 
     1）设置用户名和邮件地址
     git config --global user.name "John"
     git config --global user.email johndoe@example.com
     2）设置代理
     git config --global http.proxy http://127.0.0.1:7890
     git config --global https.proxy http://127.0.0.1:7890
-
-4、ubuntu备份密码
-    jasoNthen2314   
-     
