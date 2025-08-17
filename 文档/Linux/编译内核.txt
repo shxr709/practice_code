@@ -1,1 +1,61 @@
-wget https://cdn.kernel.org/pub/linux/v6.x/linux-6.15.9.tar.xz
+编译并安装内核
+一、下载内核源码并解压
+    1.wget https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.15.10.tar.xz
+    2.tar -xvf linux-6.15.10.tar.xz
+    #也许不移动到/usr/src文件夹也可以？
+    3.sudo cp linux-6.15.10.tar.xz /usr/src
+
+二、安装依赖工具
+    1.sudo apt update && sudo apt upgrade
+    #ubuntu24.04 LTS 编译 linux-6.15.10 内核需要安装 gawk
+    2.sudo apt install -y git build-essential gawk libncurses-dev liblz4-dev bison flex libssl-dev libelf-dev bc dwarves zstd
+
+三、配置内核选项
+    # 复制当前系统配置作为基础
+    1.sudo cp /boot/config-6.14.0-27-generic /usr/src
+    # 更新配置（使用旧配置回答新选项）或 使用菜单界面调整
+    2.make oldconfig || make menuconfig     #按需修改后保存退出  
+    #将CONFIG_SYSTEM_TRUSTED_KEYS=“debian/canonical-certs.pem” 和 
+    CONFIG_SYSTEM_REVOCATION_KEYS="debian/canonical-revoked-certs.pem"中的引号里面的内容置空；
+    3.sudo vim .config
+
+四、编译内核
+    #登录root账户，防止编译时权限不够
+    1.su
+    # 启动编译（替换 N 为 CPU 核心数）
+    2.make -j22     #24线程可用 -j22，12线程可用 -j8
+    # 编译模块
+    3.sudo make modules_install -j22 
+
+五、安装内核
+    # 安装内核文件
+    sudo make install
+
+六、更新引导配置
+    # 更新 GRUB
+    1.sudo update-initramfs -c -k 6.15.10
+    2.sudo update-grub
+
+七、重启系统
+    sudo reboot 
+
+八、验证新内核
+    uname -r  # 应输出 "6.15.10"
+
+
+
+卸载方法
+若需回退旧内核：
+    # 列出所有内核
+    1.dpkg -l | grep linux-image
+    # 删除特定内核
+    2.sudo apt purge linux-image-6.15.10
+    3.sudo update-grub
+
+
+
+彻底清理构建环境
+    #若编译出错可以清理构建环境后再次尝试编译
+    1.make mrproper     # 彻底清理（包括配置文件）
+    # 或
+    2.make clean        # 保留配置文件但清理中间文件
