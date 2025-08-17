@@ -1,3 +1,4 @@
+实验环境：Ubuntu 24.04 LTS  kernel 6.14.0
 编译并安装内核
 一、下载内核源码并解压
     1.wget https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.15.10.tar.xz
@@ -59,9 +60,10 @@
     1.make mrproper     # 彻底清理（包括配置文件）
     # 或
     2.make clean        # 保留配置文件但清理中间文件
-    #删除的文件范围从小到大依次为: make clean < make mrproper < make distclean
-    #在执行make mrproper， 会先执行make clean， 执行make distclean之前， 会先执行make mrproper
-    #make clean      删除大多数的编译生成文件， 但是会保留内核的配置文件.config， 还有足够的编译支持来建立扩展模块
-    #make mrproper   删除所有的编译生成文件， 还有内核配置文件， 再加上各种备份文件
-    #make distclean  mrproper删除的文件， 加上编辑备份文件和一些补丁文件。
-    #另外对于一个刚刚从kernel.org上下载的内核源码包， 可以不用执行make clean/make mrproper/make distclean， 因为源码包的状态本身就是clean的
+    3. clean、mrproper、distclean的区别
+        1)make clean      删除大多数的编译生成文件， 但是会保留内核的配置文件.config， 还有足够的编译支持来建立扩展模块
+        2)make mrproper   删除所有的编译生成文件， 还有内核配置文件， 再加上各种备份文件
+        3)make distclean  mrproper删除的文件， 加上编辑备份文件和一些补丁文件。
+        4)删除的文件范围从小到大依次为: make clean < make mrproper < make distclean
+          #即在执行make mrproper，会先执行make clean， 执行make distclean之前， 会先执行make mrproper
+        #另外对于一个刚刚从kernel.org上下载的内核源码包， 可以不用执行make clean/make mrproper/make distclean， 因为源码包的状态本身就是clean的
