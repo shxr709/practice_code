@@ -3,19 +3,18 @@
 一、下载内核源码并解压
     1.wget https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.15.10.tar.xz
     2.tar -xvf linux-6.15.10.tar.xz
-    #也许不移动到/usr/src文件夹也可以？
-    3.sudo cp linux-6.15.10.tar.xz /usr/src
+    //3.sudo cp linux-6.15.10.tar.xz /usr/src
 
 二、安装依赖工具
     1.sudo apt update && sudo apt upgrade
     #ubuntu24.04 LTS 编译 linux-6.15.10 内核需要安装 gawk
-    2.sudo apt install -y git build-essential gawk libncurses-dev liblz4-dev bison flex libssl-dev libelf-dev bc dwarves zstd
+    2.sudo apt install -y git build-essential gawk libdw-dev libncurses-dev liblz4-dev bison flex libssl-dev libelf-dev bc dwarves zstd
 
 三、配置内核选项
     # 复制当前系统配置作为基础
     1.sudo cp /boot/config-6.14.0-27-generic /usr/src
     # 更新配置（使用旧配置回答新选项）或 使用菜单界面调整
-    2.make oldconfig || make menuconfig     #按需修改后保存退出  
+    2.sudo make olddefconfig || sudo make menuconfig     #按需修改后保存退出  
     #将CONFIG_SYSTEM_TRUSTED_KEYS=“debian/canonical-certs.pem” 和 
     CONFIG_SYSTEM_REVOCATION_KEYS="debian/canonical-revoked-certs.pem"中的引号里面的内容置空；
     3.sudo vim .config
@@ -66,4 +65,4 @@
         3)make distclean  mrproper删除的文件， 加上编辑备份文件和一些补丁文件。
         4)删除的文件范围从小到大依次为: make clean < make mrproper < make distclean
           #即在执行make mrproper，会先执行make clean， 执行make distclean之前， 会先执行make mrproper
-        #另外对于一个刚刚从kernel.org上下载的内核源码包， 可以不用执行make clean/make mrproper/make distclean， 因为源码包的状态本身就是clean的
+    #另外对于一个刚刚从kernel.org上下载的内核源码包， 可以不用执行make clean/make mrproper/make distclean， 因为源码包的状态本身就是clean的
