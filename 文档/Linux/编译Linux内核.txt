@@ -25,7 +25,7 @@
     # 启动编译（替换 N 为 CPU 核心数）
     2.make -j22     #24线程可用 -j22，12线程可用 -j8
     # 编译模块
-    3.sudo make modules_install -j22 
+    3.make modules_install -j22 
 
 五、安装内核
     # 安装内核文件
