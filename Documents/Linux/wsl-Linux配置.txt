@@ -1,0 +1,151 @@
+wsl设置默认用户
+	1.打开WSL并编辑/etc/wsl.conf文件：
+		sudo vim /etc/wsl.conf
+	2.添加以下内容：
+		[user]		
+		default = username
+	3.保存并退出文件。关闭WSL后重新进入，默认用户将更改为username。
+	#注意：如果同时配置了wsl.conf文件和使用命令行工具，wsl.conf文件的配置优先级更高。
+
+
+
+Arch Linux 中创建普通用户
+	1.创建用户（不创建家目录）：
+		sudo useradd -m -G wheel 用户名
+	  #其中 -m 参数会创建用户家目录，-G wheel 将用户添加到 wheel 组（获取管理员权限）
+	2.设置用户密码：
+		sudo passwd 用户名
+	3.设置用户sudo权限
+	  编辑 sudoers 文件：
+		sudo visudo
+	  找到以下行并取消注释（删除 #）：
+		# %wheel ALL=(ALL) ALL
+	4.验证用户创建
+		id 用户名
+	5.切换到新创建的用户：
+		su - 用户名
+	6.若出现visudo: no editor found (editor path = /usr/bin/vi)
+	  	1)安装 vi/vim 编辑器
+			# 安装 vim（包含 vi）
+			sudo pacman -S vim
+			# 或者安装 nano（更简单的文本编辑器）
+			sudo pacman -S nano
+		2)直接编辑 sudoers 文件
+			# 使用已安装的编辑器（如 nano）直接编辑文件
+			sudo nano /etc/sudoers
+			# 直接编辑 sudoers 文件有一定风险，请确保您知道自己在做什么，不要破坏文件格式
+
+
+
+删除 Ubuntu 用户
+	#使用 userdel 或 deluser 命令删除用户
+	1.删除用户并保留主目录
+		sudo userdel 用户名
+	  #命令仅删除用户账户，但保留其主目录和文件。
+	2.删除用户及其主目录
+		sudo userdel -r 用户名
+	  或使用 deluser 命令：
+		sudo deluser --remove-home 用户名
+	  #此命令会同时删除用户账户及其主目录。
+注意事项:
+	1.权限要求：需要管理员权限，确保以 sudo 执行命令。
+	2.备份数据：在删除用户前，建议使用 tar 工具备份其主目录：
+		sudo tar cfjv 用户名-home-backup.tar.bz /home/用户名
+	3.验证删除：
+		cat /etc/passwd | grep 用户名
+
+
+
+生成ssh密钥报 -bash: ssh-keygen: command not found，原因：没有安装ssh
+在 Arch 上安装和配置 SSH
+	1. sudo pacman -Syu
+	2. 安装 OpenSSH 服务器
+		sudo pacman -S openssh
+	3. 检查、启动、停止 OpenSSH 服务器状态
+		sudo systemctl status sshd
+		sudo systemctl start sshd
+		sudo systemctl stop sshd
+	4. 设置、禁用开机自启动
+		sudo systemctl enable sshd
+		sudo systemctl disable sshd
+	5. 配置 SSH 服务器 编辑配置文件：
+		sudo nano /etc/ssh/sshd_config
+		sudo systemctl restart sshd #保存并重启服务 
+
+
+
+arch 使用git branch报error: cannot run less: No such file or directory fatal: unable to execute pager 'less'，原因：系统中没有安装 less 命令 
+#less 是一个常用的分页工具，用于显示长输出内容
+1. 安装 less
+	1)Debian/Ubuntu:
+		sudo apt-get update
+		sudo apt-get install less
+	2)CentOS/RHEL:
+		sudo yum install less
+2. 修改 Git 配置
+	如果你无法安装 less，可以修改 Git 配置，使用其他分页工具。
+	git config --global core.pager more
+3. 检查 PATH 环境变量
+	确保 less 命令所在的目录包含在你的 PATH 环境变量中。
+	export PATH=$PATH:/usr/local/bin
+
+
+
+Vim 撤销操作
+	1.按下 u 键可以撤销最近的一次更改。
+	2.使用 :undo 命令
+		在命令模式下输入 :undo，效果与 u 相同。
+	3.撤销多次更改
+		输入 nu（例如 3u）可以一次性撤销最近的 n 次更改。
+	4.恢复被撤销的更改
+		如果误撤销了更改，可以使用 Ctrl + r 恢复被撤销的内容。
+	#注意事项：
+		1)确保处于正常模式（按 Esc 键切换）。
+		2}使用 U 可以撤销当前行的所有更改，但可以通过再次按 u 恢复
+
+
+
+正确的WSL重启命令
+#通过powershell或cmd命令执行此操作
+	1.关闭所有实例或发行版
+		wsl --shutdown
+	2.单独关闭某个实例或发行版
+		wsl -l -v
+ 		wsl -t 发行版名称
+                       
+
+
+解决 WSL ArchLinux 中文乱码问题
+	1.编辑 /etc/locale.gen 文件
+	  #移除行首的 # 以取消注释
+		en_US.UTF-8 UTF-8
+		zh_CN.UTF-8 UTF-8
+	2.生成Locale：
+		sudo locale-gen
+	3.设置系统语言环境
+    		1)全局设置（谨慎使用，可能导致TTY乱码）编辑 /etc/locale.conf
+			LANG=zh_CN.UTF-8
+		2)用户级设置 编辑 ~/.bashrc、~/.xinitrc 或 ~/.xprofile（取决于你的启动方式）
+			添加:export LANG=zh_CN.UTF-8
+			     export LANGUAGE=zh_CN:en_US
+		3)运行 source ~/.bashrc 或重新登录使更改生效
+	4.验证当前Locale设置
+		输入 locale 命令，检查输出是否与你的设置一致
+	5.重启WSL实例
+		1)PowerShell执行：wsl --shutdown
+		2)重启:
+			wsl -d Arch 或 ctrl + shift + 5 (wsl快捷键)
+	6.验证
+    		在终端中输入 echo '中文测试'，看是否能正确显示
+	7.注意
+   		1)谨慎设置LC_ALL：设置 LC_ALL 会覆盖所有其他Locale设置（如LC_TIME等），不建议轻易将其设置为 zh_CN.UTF-8，除非你希望所有方面（如时间、货币格式等）都强制使用中文 locale。通常设置 LANG 和 LANGUAGE 已足够
+    		2)SSH连接到远程服务器乱码：如果你在WSL的Arch中通过SSH连接其他服务器时出现乱码，问题可能在远程服务器。尝试在SSH连接后临时执行 export LANG=zh_CN.UTF-8 或联系服务器管理员修改其Locale设置
+		3)GUI应用中文乱码：如果你使用WSLg运行Linux图形界面应用出现中文乱码，除了上述步骤，可能还需安装图形界面相关的语言包
+
+
+
+wsl 配置代理
+	1.在 C:\Users\用户名 目录下创建 .wslconfig 文件
+	2.在 .wslconfig 文件中添加
+		[wsl2]
+		networkingMode=mirrored
